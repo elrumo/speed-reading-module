@@ -1,5 +1,10 @@
+:root{
+    --sf-blue: #206EFF;
+}
+
 body{
     background-color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .main-wrapper{
@@ -8,7 +13,7 @@ body{
     left: 50%;
     transform: translate(-50%,-50%);
     width: 80%;
-    max-width: 670px;
+    max-width: 550px;
     height: auto;
     box-shadow: 0px 14px 40px -18px #0000008c;
     display: grid;
@@ -16,6 +21,97 @@ body{
     padding: 50px;
 }
 
-/* span{
-    background-color: yellow;
-} */
+.center{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+}
+
+.center2{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 66px;
+}
+
+.sections{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.bottomSection{
+    padding-top: 50px;
+}
+
+.wmpWrapper{
+    position: relative;
+    font-size: 0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+}
+
+.output{
+    display: inline;
+    position: relative;
+    margin: 0px;
+    width: 50px;
+}
+
+.wmpWrapper h3{
+    left: 3px;
+}
+
+.slider{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 2px;
+    background: var(--sf-blue);
+    border-radius: 2px;
+    outline: none;
+    cursor: grab;
+}
+
+.slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 20px;
+    background-color: white;
+    border-radius: 3px;
+    border: 2px solid black;
+}
+
+.slider:active{
+    cursor: grabbing;
+}
+
+button{
+    box-shadow: 1px 0 20px -3px rgba(80, 80, 80, 0.67);
+    background-color: var(--sf-blue);
+    border-style: none;
+    color: white;
+    width: 200px;
+    height: 40px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    transition: 0.3s;
+    border: 2px solid var(--sf-blue);
+    border-radius: 4px;
+}
+
+button:hover{
+    background-color: white;
+    color: var(--sf-blue);
+}
+
+button:active{
+    background-color: white;
+    color: var(--sf-blue);
+}
+
+button:focus{
+    outline: none;
+}

@@ -12,7 +12,7 @@
     
     <div class="main-wrapper">
         
-        <div class="top-bar">
+        <div class="bar">
         </div>
         
         <div class="text-input-body">
@@ -20,15 +20,22 @@
             </section>
         </div>
         
-        <div class="bottom-bar">
-            <input type="range" min="40" max="400" step="20" value="120" class="slider" id="sliderRange">
+        <div class="sections bottomSection">
             <div>
-                <h2 id="currentRange"></h2>
-                <h2 id="wordCount"></h2>
-                <h3> WPM </h3>
+                <div class="center" >
+                    <div class="wmpWrapper">
+                        <div class="center2">
+                            <h2 class="output" id="currentRange"></h2>
+                            <h3 class="output">WPM</h3>
+                        </div>
+                    </div>
+                    <input type="range" min="40" max="400" step="20" value="120" class="slider" id="sliderRange">
+                </div>
             </div>
             <div>
-                <button onclick="readText()">Start</button>
+                <div class="center">
+                    <button id="startBtn" onclick="readText()">Start</button>
+                </div>
             </div>
         </div>
         

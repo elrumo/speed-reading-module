@@ -1,0 +1,21 @@
+body{
+    background-color: white;
+}
+
+.main-wrapper{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 80%;
+    max-width: 670px;
+    height: auto;
+    box-shadow: 0px 14px 40px -18px #0000008c;
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 0.5fr;
+    padding: 50px;
+}
+
+/* span{
+    background-color: yellow;
+} */

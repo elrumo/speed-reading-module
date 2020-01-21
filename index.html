@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Reading Module</title>
+</head>
+<body>
+    
+    
+    <div class="main-wrapper">
+        
+        <div class="top-bar">
+        </div>
+        
+        <div class="text-input-body">
+            <section id="textToReadWrapper">
+            </section>
+        </div>
+        
+        <div class="bottom-bar">
+            <input type="range" min="40" max="400" step="20" value="120" class="slider" id="sliderRange">
+            <div>
+                <h2 id="currentRange"></h2>
+                <h2 id="wordCount"></h2>
+                <h3> WPM </h3>
+            </div>
+            <div>
+                <button onclick="readText()">Start</button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="script.js"></script>
+    
+</body>
+</html>
+
+
+
+            <!-- <textarea cols="100%" rows="4" id="textToRead">
+        
+                There are, however, many Texans who still dress like cowboys. They wear cowboy boots and a kind of tall cowboy hat they call a ten- gallon- hat because it looks as if it could hold that much water. Another symbol of Texas is the oil well. Texas produces more oil than any other state. Oil was first discovered near the city of Houston in the early 1900s.
+            </textarea> -->

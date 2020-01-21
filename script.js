@@ -1,6 +1,9 @@
 var rangeSlider = document.getElementById("sliderRange");
-var output = document.getElementById("currentRange");
-output.innerHTML = rangeSlider.value;
+var outputSlider = document.getElementById("currentRange");
+var outputText = document.getElementById("textToReadWrapper");
+var startBtn = document.getElementById("startBtn");
+var hilightColor = "#206eff59"
+var stop = true
 
 rangeSlider.oninput = function () {
     output.innerHTML = this.value
@@ -29,6 +32,13 @@ function readText(){
         setTimeout(function(){
             document.getElementById("textToReadWrapper").childNodes[i + 1].innerHTML = "<span style='background-color: yellow;'>" + textToAdd[i] + " "
         }, 60000 / output.innerHTML * i)
+    }
+            }
+            else{
+                console.log("hi")
+                return window.stop = true
+            }
+        }, 60000 / outputSlider.innerHTML * i)
     }
 
     for (i = 0; i < textToAdd.length; i++){

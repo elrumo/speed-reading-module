@@ -34,52 +34,43 @@ function initText(text){
 }
 
 function readText(){
-
-    function getEl(i){
-        setTimeout(function(){
-            if (window.stop == false) {
-                var nodeLength = outputText.childNodes.length - 1
-                // Gets node and highlidghts it, then removed the highlught off the previous node.
-                console.log(outputText.childNodes[i].innerHTML)
-                outputText.childNodes[i].innerHTML = "<span style='background-color:" + hilightColor + ";'>" + textToAdd[i] + "</span>" + " "
-                outputText.childNodes[i-1].innerHTML = "<span>" + textToAdd[i - 1] + " "
-                
-                // Function to wait x seconds before removing highlight on last node.
-                if (outputText.childNodes[i + 1].innerHTML == outputText.childNodes[nodeLength].innerHTML){
-                    setTimeout(function(){
-                        outputText.childNodes[nodeLength].innerHTML = "<span>" + textToAdd[i] + " "
-                    }, 60000 / outputSlider.innerHTML)
+    
+    function getEl(){ // Gets node and highlidghts it, then removed the highlught off the previous node.
+        for (let i = 0; i < textToAdd.length; i++) {
+            function readText(){
+                if (window.stop == false) {
+                    var nodeLength = outputText.childNodes.length - 1
+                    console.log(outputText.childNodes[i].innerHTML)
+                    outputText.childNodes[i].innerHTML = "<span style='background-color:" + hilightColor + ";'>" + textToAdd[i] + "</span>" + " "
+                    outputText.childNodes[i - 1].innerHTML = "<span>" + textToAdd[i - 1] + " "
+                    
+                    if (outputText.childNodes[i + 1].innerHTML == outputText.childNodes[nodeLength].innerHTML) { // Function to wait x seconds before removing highlight on last node.
+                        setTimeout(function () {
+                            outputText.childNodes[nodeLength].innerHTML = "<span>" + textToAdd[i + 1] + " "
+                        }, 60000 / outputSlider.innerHTML)
+                    }
+                }
+                else{
+                    clearTimeout(timer);
+                    console.log("Hold")
+                    return
                 }
             }
-            else{
-                console.log("hi")
-                return window.stop = true
-            }
-        }, 60000 / outputSlider.innerHTML * i)
+            timer = setTimeout(readText, 6000 / outputSlider.innerHTML * i)
+        }
     }
     
     // For loop that iterates through the text array and runs the above function, wait x seconds before proceeding.
     if(startBtn.innerHTML == "Start"){
-        for (i = 0; i < textToAdd.length; i++){
-            if (window.stop == true) {
-                getEl(i)
-            }
-            else{
-                console.log("break")
-                break
-            }       
-                }
-        window.stop = false
         startBtn.innerHTML = "Stop"
-        console.log(window.stop)
+        getEl()
+        window.stop = false
     }
     else{
         startBtn.innerHTML = "Start"
         window.stop = true
-        console.log(window.stop)
         initText(textToAdd)
     }
-
     
 }
 

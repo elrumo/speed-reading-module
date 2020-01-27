@@ -1,22 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <title>Reading Module</title>
 </head>
+
+<style>
+    :root{
+    --sf-blue: #206EFF;
+}
+
+.main-wrapper{
+    background-color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 80%;
+    max-width: 550px;
+    height: auto;
+    box-shadow: 0px 14px 40px -18px #0000008c;
+    display: grid;
+    grid-template-rows: 0.5fr 1fr 0.5fr;
+    padding: 20px 50px 50px 50px;
+}
+
+.center{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+}
+
+.center2{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 66px;
+}
+
+.sections{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.bottomSection{
+    padding-top: 50px;
+}
+
+.wmpWrapper{
+    position: relative;
+    font-size: 0.7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+}
+
+.clockWrapper{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 85px;
+    padding: 35px 0 35px 0;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+}
+
+.clockWrapper h2{
+    position: relative;
+    top: 50%;
+    transform: translatey(-50%);
+    margin: 0;
+    /* vertical-align: bottom; */
+}
+
+#clockOutput{
+    margin: 0;
+}
+
+.output{
+    display: inline;
+    position: relative;
+    margin: 0px;
+    width: 50px;
+}
+
+.wmpWrapper h3{
+    left: 3px;
+}
+
+.slider{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 200px;
+    height: 2px;
+    background: var(--sf-blue);
+    border-radius: 2px;
+    outline: none;
+    cursor: grab;
+}
+
+.slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 20px;
+    background-color: white;
+    border-radius: 3px;
+    border: 2px solid black;
+}
+
+.slider:active{
+    cursor: grabbing;
+}
+
+#startBtn{
+    box-shadow: 1px 0 20px -3px rgba(80, 80, 80, 0.67);
+    background-color: var(--sf-blue);
+    border-style: none;
+    color: white;
+    width: 200px;
+    height: 40px;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    transition: 0.3s;
+    border: 2px solid var(--sf-blue);
+    border-radius: 4px;
+}
+
+#startBtn:hover{
+    background-color: white;
+    color: var(--sf-blue);
+}
+
+#startBtn:active{
+    background-color: white;
+    color: var(--sf-blue);
+}
+
+#startBtn:focus{
+    outline: none;
+}
+
+</style>
+
 <body>
-    
-    
     <div class="main-wrapper">
         
         <div class="bar">
+            <div class="clockWrapper">
+                <h1 id="clockOutput"></h1>
+                <div>
+                    <h2 class=""> sec</h2>
+                </div>
+            </div>
         </div>
         
         <div class="text-input-body">
             <section id="textToReadWrapper">
+                There are, however, many Texans who still dress like cowboys. They wear cowboy boots and a kind of tall cowboy hat they
+                call a ten- gallon- hat because it looks as if it could hold that much water. Another symbol of Texas is the oil well.
+                Texas produces more oil than any other state. Oil was first discovered near the city of Houston in the early 1900s.
             </section>
         </div>
         
@@ -34,21 +180,117 @@
             </div>
             <div>
                 <div class="center">
-                    <button id="startBtn" onclick="readText()">Start</button>
+                    <button id="startBtn">Start</button>
+                    <!-- <button id="startBtn" onclick="readText()">Start</button> -->
                 </div>
             </div>
         </div>
         
     </div>
     
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
     
 </body>
-</html>
 
+<script>
+    window.onload = function () {
+        var hilightColor = "#206eff59"
+        var rangeSlider = document.getElementById("sliderRange");
+        var outputSlider = document.getElementById("currentRange");
+        var outputText = document.getElementById("textToReadWrapper");
+        var startBtn = document.getElementById("startBtn");
+        var clockOutput = document.getElementById("clockOutput");
+        var seconds = 0;
+        var n = 0
+        var Interval;
+        var text;
+        var textArray;
+        var textToAdd;
+        clockOutput.innerHTML = seconds
 
+        startBtn.onclick = function () {
+            if (startBtn.innerHTML == "Start") {
+                seconds = 0
+                startTimer()
+                readText()
+                startBtn.innerHTML = "Stop"
+                Interval = setInterval(startTimer, 1000);
+                text = setInterval(readText, 60000 / outputSlider.innerHTML)
+            } else {
+                reset()
+                n = 0
+            }
+        }
 
-            <!-- <textarea cols="100%" rows="4" id="textToRead">
-        
-                There are, however, many Texans who still dress like cowboys. They wear cowboy boots and a kind of tall cowboy hat they call a ten- gallon- hat because it looks as if it could hold that much water. Another symbol of Texas is the oil well. Texas produces more oil than any other state. Oil was first discovered near the city of Houston in the early 1900s.
-            </textarea> -->
+        function reset(){
+            startBtn.innerHTML = "Start"
+            clearInterval(Interval);
+            clearInterval(text);
+            clearHighlight()
+            clockOutput.innerHTML = seconds
+        }
+
+        // Stops hilighting words
+        function clearHighlight() {
+            outputText.childNodes[n - 1].innerHTML = "<span>" + textToAdd[n - 1] + " "
+        }
+
+        // Starts higlighing words
+        function readText() {
+            var nodeLength = outputText.childNodes.length - 1
+            if(n < nodeLength){
+                outputText.childNodes[n].innerHTML = "<span style='background-color:" + hilightColor + ";'>" + textToAdd[n] + "</span>" + " "
+                if (outputText.childNodes[n - 1]) {
+                    clearHighlight()
+                }
+                if (outputText.childNodes[n + 1].innerHTML == outputText.childNodes[textToAdd.length - 1].innerHTML) { // Function to wait x seconds before removing highlight on last node.
+                    setTimeout(function () {
+                        outputText.childNodes[n].innerHTML = "<span style='background-color:" + hilightColor + ";'>" + textToAdd[textToAdd.length - 1] + " "
+                        }, 60000 / outputSlider.innerHTML)
+                    setTimeout(function () {
+                        outputText.childNodes[n].innerHTML = "<span>" + textToAdd[textToAdd.length - 1] + " "
+                        n = 0
+                        }, 60000 / outputSlider.innerHTML*2)
+                    }
+                n++
+            }else{
+                reset()
+            }
+        }
+
+        // Starts the timer
+        function startTimer() {
+            seconds++;
+            clockOutput.innerHTML = seconds;
+        }
+
+        // Displays the initial text on screen.
+        function initText(text) {
+            document.getElementById("textToReadWrapper").innerHTML = ""
+            for (i = 0; i < textToAdd.length; i++) {
+                document.getElementById("textToReadWrapper").innerHTML += '<span>' + text[i] + " "
+            }
+        }
+
+        //Reads value of slider
+        function readSlider() {
+            outputSlider.innerHTML = rangeSlider.value;
+            rangeSlider.oninput = function () {
+                outputSlider.innerHTML = this.value
+            }
+        }
+
+        // Turns text on HTML into an array
+        function getTextArr() {
+            s = document.getElementById("textToReadWrapper").innerHTML;
+            s = s.replace(/(^\s*)|(\s*$)/gi, "");
+            s = s.replace(/[ ]{2,}/gi, " ");
+            s = s.replace(/\n /, "\n");
+            textToAdd = s.split(' ');
+        }
+
+        getTextArr()
+        initText(textToAdd)
+        readSlider()
+    }
+</script>

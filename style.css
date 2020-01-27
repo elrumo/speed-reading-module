@@ -2,12 +2,9 @@
     --sf-blue: #206EFF;
 }
 
-body{
+.main-wrapper{
     background-color: white;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-
-.main-wrapper{
     position: absolute;
     top: 45%;
     left: 50%;
@@ -37,7 +34,7 @@ body{
 
 .sections{
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto auto;
 }
 
 .bottomSection{
@@ -50,6 +47,28 @@ body{
     left: 50%;
     transform: translateX(-50%);
     width: 100px;
+}
+
+.clockWrapper{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 85px;
+    padding: 35px 0 35px 0;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+}
+
+.clockWrapper h2{
+    position: relative;
+    top: 50%;
+    transform: translatey(-50%);
+    margin: 0;
+    /* vertical-align: bottom; */
+}
+
+#clockOutput{
+    margin: 0;
 }
 
 .output{
@@ -88,7 +107,7 @@ body{
     cursor: grabbing;
 }
 
-button{
+#startBtn{
     box-shadow: 1px 0 20px -3px rgba(80, 80, 80, 0.67);
     background-color: var(--sf-blue);
     border-style: none;
@@ -102,16 +121,16 @@ button{
     border-radius: 4px;
 }
 
-button:hover{
+#startBtn:hover{
     background-color: white;
     color: var(--sf-blue);
 }
 
-button:active{
+#startBtn:active{
     background-color: white;
     color: var(--sf-blue);
 }
 
-button:focus{
+#startBtn:focus{
     outline: none;
 }

@@ -43,7 +43,7 @@
 
 .sections{
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
 }
 
 .bottomSection{
@@ -144,6 +144,26 @@
     outline: none;
 }
 
+@media (max-width: 789px){
+
+    .main-wrapper{
+        width: 65%;
+    }
+
+    .sections{
+        grid-template-columns: auto;
+    }
+
+    .bottomSection{
+        padding-top: 40px;
+    }
+
+    .slider-wrapper{
+        padding-bottom: 50px;
+    }
+
+}
+
 </style>
 
 <body>
@@ -167,7 +187,7 @@
         </div>
         
         <div class="sections bottomSection">
-            <div>
+            <div class="slider-wrapper">
                 <div class="center" >
                     <div class="wmpWrapper">
                         <div class="center2">
@@ -186,10 +206,7 @@
             </div>
         </div>
         
-    </div>
-    
-    <!-- <script src="script.js"></script> -->
-    
+    </div>    
 </body>
 
 <script>

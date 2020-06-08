@@ -1,0 +1,129 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <title>Reading Module</title>
+</head>
+
+
+<script>
+    window.onload = function () {
+        var hilightColor = "#206eff59"
+        var rangeSlider = document.getElementById("sliderRange");
+        var outputSlider = document.getElementsByClassName("wpm");
+        var outputText = document.getElementById("textToReadWrapper");
+        var startBtn = document.getElementById("startBtn");
+        var clockOutput = document.getElementById("clockOutput");
+        var wordsReadOutput = document.getElementById("wordsRead");
+        var seconds = 0;
+        var n = 0
+        var Interval;
+        var text;
+        var textArray;
+        var textToAdd;
+        var wordsRead;
+        clockOutput.innerHTML = seconds
+
+        startBtn.onclick = function () {
+            if (startBtn.innerHTML == "Start") {
+                seconds = 0
+                startTimer()
+                readText()
+                startBtn.innerHTML = "Stop"
+                Interval = setInterval(startTimer, 1000);
+                text = setInterval(readText, 60000 / rangeSlider.value)
+            } else {
+                reset()
+                n = 0
+            }
+        }
+
+        function reset(){
+            startBtn.innerHTML = "Start"
+            clearInterval(Interval);
+            clearInterval(text);
+            clearHighlight()
+            clockOutput.innerHTML = seconds
+        }
+
+        // Stops hilighting words
+        function clearHighlight() {
+            outputText.childNodes[n - 1].innerHTML = "<span>" + textToAdd[n - 1] + " "
+        }
+
+        // Starts higlighing words
+        function readText() {
+            var nodeLength = outputText.childNodes.length - 1
+            if(n < nodeLength){
+                outputText.childNodes[n].innerHTML = "<span style='background-color:" + hilightColor + ";'>" + textToAdd[n] + "</span>" + " "
+                if (outputText.childNodes[n - 1]) {
+                    clearHighlight()
+                }
+                // Function to wait x seconds before removing highlight on last node.
+                if (outputText.childNodes[n + 1].innerHTML == outputText.childNodes[textToAdd.length - 1].innerHTML) { 
+                    setTimeout(function () {
+                        outputText.childNodes[n].innerHTML = "<span style='background-color:" + hilightColor + ";'>" + textToAdd[textToAdd.length - 1] + " "
+                        }, 60000 / rangeSlider.value)
+                    setTimeout(function () {
+                        outputText.childNodes[n].innerHTML = "<span>" + textToAdd[textToAdd.length - 1] + " "
+                        n = 0
+                        }, 60000 / rangeSlider.value*2)
+                }
+                wordsRead = n+1;
+                wordsReadOutput.innerHTML = wordsRead
+                n++
+            }else{
+                reset()
+            }
+        }
+
+        // Starts the timer
+        function startTimer() {
+            seconds++;
+            clockOutput.innerHTML = seconds;
+        }
+
+        // Displays the initial text on screen.
+        function initText(text) {
+            document.getElementById("textToReadWrapper").innerHTML = ""
+            for (i = 0; i < textToAdd.length; i++) {
+                document.getElementById("textToReadWrapper").innerHTML += '<span>' + text[i] + " "
+            }
+        }
+
+        //Reads value of slider
+        function readSlider() {
+
+            for (let item of outputSlider){
+                item.innerHTML = rangeSlider.value
+            }
+
+            // outputSlider.innerHTML = rangeSlider.value;
+            rangeSlider.oninput = function () {
+                for (let item of outputSlider){
+                    item.innerHTML = this.value
+                }
+                // outputSlider.innerHTML = this.value
+            }
+        }
+
+        // Turns text on HTML into an array
+        function getTextArr() {
+            s = document.getElementById("textToReadWrapper").innerHTML;
+            s = s.replace(/(^\s*)|(\s*$)/gi, "");
+            s = s.replace(/[ ]{2,}/gi, " ");
+            s = s.replace(/\n /, "\n");
+            textToAdd = s.split(' ');
+        }
+
+        getTextArr()
+        initText(textToAdd)
+        readSlider()
+    }
+</script>
+
+
+<style>:root{--sf-blue:#206EFF;--sf-darker-blue:#0d4ec6}.main-wrapper{background-color:white;font-family:'Trebuchet MS','Lucida Sans Unicode','Lucida Grande','Lucida Sans',Arial,sans-serif;margin-left:auto;margin-right:auto;margin-top:auto;width:100%;max-width:550px;height:auto;box-shadow:0px 14px 40px -18px #0000008c;display:grid;grid-template-rows:0.5fr 1fr 0.5fr;padding:10px 50px 45px 50px}.text-input-body{font-size:0.9em}.center{margin-left:auto;margin-right:auto}.center-right{margin-left:auto}.center-left{margin-right:auto}.center-vertical{margin-top:auto;margin-bottom:auto}.center2{position:relative;left:50%;transform:translateX(-50%);width:66px}.top-section{display:grid;grid-template-columns:1fr 1fr 1fr}.stats-wrapper{display:grid;grid-template-columns:auto auto;text-align:center}.sections{display:grid;grid-template-columns:1fr 1fr}.bottomSection{padding-top:30px}.wpmWrapper{position:relative;font-size:0.7rem;width:100px;text-align:left}.clockWrapper{display:grid;grid-template-columns:1fr;position:relative;padding:35px 0 35px 0}.h1-speed-reading{font-size:1.2em !important;font-weight:bolder}.h2-speed-reading{font-size:1em !important;font-weight:bolder}.h3-speed-reading{font-size:1.07em !important;font-weight:800}.h5-speed-reading{font-size:0.7em;text-transform:uppercase;padding-bottom:5px;color:var(--sf-darker-blue)}.text-align-left{text-align:left}.text-align-right{text-align:right}#clockOutput{margin:0}.output{display:inline;position:relative;margin:0px}.slider{-webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--sf-blue);border-radius:2px;outline:none;cursor:grab}.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:20px;background-color:white;border-radius:3px;border:2px solid black}.slider:active{cursor:grabbing}.slider-wrapper{width:100%}#startBtn{box-shadow:1px 0 20px -3px rgba(80, 80, 80, 0.67);background-color:var(--sf-blue);border-style:none;color:white;width:80%;max-width:150px;height:40px;font-size:0.8rem;text-transform:uppercase;transition:0.3s;border:2px solid var(--sf-blue);border-radius:4px}#startBtn:hover{background-color:white;color:var(--sf-blue)}#startBtn:active{background-color:white;color:var(--sf-blue)}#startBtn:focus{outline:none}@media (max-width: 600px){.main-wrapper{padding:0px 40px 35px 40px}.h5-speed-reading{font-size:0.6em}}@media (max-width: 600px){.main-wrapper{padding:0px 25px 25px 25px}.sections{grid-template-columns:1fr}#startBtn{margin-top:40px;width:100%;max-width:none}.text-input-body{font-size:0.8em}}</style>
+
+<body><div class="main-wrapper"><div class="top-section"><div class="clockWrapper center"><div class="h5-speed-reading">Time to read</div><div class="stats-wrapper"><div class="center-vertical h1-speed-reading" id="clockOutput"></div><div class="center-vertical h2-speed-reading text-align-left"> sec</div></div></div><div class="clockWrapper center"><div class="h5-speed-reading">Words read</div><div class="center-vertical h1-speed-reading center text-align-left" id="wordsRead"></div></div><div class="clockWrapper center"><div class="h5-speed-reading">Words per minute</div><div class="stats-wrapper"><div class="center-vertical h1-speed-reading wpm" id="currentRange"></div><div class="center-vertical h2-speed-reading text-align-left"> WPM</div></div></div></div><div class="text-input-body"> <section id="textToReadWrapper"> There are, however, many Texans who still dress like cowboys. They wear cowboy boots and a kind of tall cowboy hat they call a ten- gallon- hat because it looks as if it could hold that much water. Another symbol of Texas is the oil well. Texas produces more oil than any other state. Oil was first discovered near the city of Houston in the early 1900s. </section></div><div class="sections bottomSection"><div class="slider-wrapper center"><div class="wpmWrapper center-left"><div class="output h2-speed-reading wpm" id="currentRange"></div><div class="output h3-speed-reading">WPM</div></div> <input class="slider center" type="range" min="40" max="400" step="20" value="120" id="sliderRange"></div> <button id="startBtn" class="center-right center-vertical">Start</button></div></div></body>
